@@ -55,3 +55,39 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     }
+// --- GESTION BANNIÈRE COOKIES ---
+    const cookieBanner = document.getElementById('cookie-banner');
+    const acceptBtn = document.getElementById('accept-cookies');
+    const declineBtn = document.getElementById('decline-cookies');
+
+    // Clé utilisée dans le stockage local du navigateur
+    const CONSENT_KEY = 'gabriel_project_cookie_consent';
+
+    // Fonction pour afficher la bannière avec un petit délai
+    const showBanner = () => {
+        setTimeout(() => {
+            cookieBanner.classList.add('show');
+        }, 2000); // Apparaît après 2 secondes pour ne pas être agressif
+    };
+
+    // Vérifie si l'utilisateur a déjà choisi
+    if (!localStorage.getItem(CONSENT_KEY)) {
+        showBanner();
+    }
+
+    // Si clic sur "Accepter"
+    if (acceptBtn) {
+        acceptBtn.addEventListener('click', () => {
+            localStorage.setItem(CONSENT_KEY, 'accepted');
+            cookieBanner.classList.remove('show');
+            // Ici, vous pourriez charger Google Analytics si vous l'utilisez plus tard
+        });
+    }
+
+    // Si clic sur "Continuer sans accepter"
+    if (declineBtn) {
+        declineBtn.addEventListener('click', () => {
+            localStorage.setItem(CONSENT_KEY, 'declined');
+            cookieBanner.classList.remove('show');
+        });
+    }
